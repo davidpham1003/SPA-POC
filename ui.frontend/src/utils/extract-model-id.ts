@@ -14,37 +14,12 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-import sanitizeHtml from 'sanitize-html';
-import sanitizeWhiteList from '../sanitize-html.whitelist';
-
-import React, { Component } from 'react';
-import extractModelId from '../../utils/extract-model-id';
-
-require('./Text.css');
-
 /**
- * Text React component
+ * Extract an id from the cqModel field of given properties
+ *
+ * @param path - Path to be converted into an id
+ * @returns {string|undefined}
  */
-class Text extends Component {
-  get richTextContent() {
-    return (
-      <div
-        id={extractModelId(this.props.cqPath)}
-        data-rte-editelement
-        dangerouslySetInnerHTML={{
-          __html: sanitizeHtml(this.props.text, sanitizeWhiteList)
-        }}
-      />
-    );
-  }
-
-  get textContent() {
-    return <div>{this.props.text}</div>;
-  }
-
-  render() {
-    return this.props.richText ? this.richTextContent : this.textContent;
-  }
+export default function extractModelId(path: string): string | undefined {
+  return path && path.replace(/\/|:/g, '_');
 }
-
-export default Text;

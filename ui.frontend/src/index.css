@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @layer components {
+    .cmp-navigation__group {
+        @apply text-3xl;
+        background-color: red;
+    }
+} */
