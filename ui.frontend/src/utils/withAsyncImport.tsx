@@ -32,14 +32,14 @@ const ErrorMessage = () => {
 };
 
 const ComponentBlockSkeleton = (props) => (
-    <div className="loading-skeleton loading-skeleton__block" style={{height: props.skeletonHeight ? props.skeletonHeight : '50px'}}/>
+    <div className="loading-skeleton loading-skeleton__block" style={{ height: props.skeletonHeight ? props.skeletonHeight : '50px' }} />
 );
 
-const FallbackComponent = withProps(ComponentBlockSkeleton, {skeletonHeight: 1000});
+const FallbackComponent = withProps(ComponentBlockSkeleton, { skeletonHeight: 1000 });
 
 
 export const withAsyncImport = (asyncImport,
-                                loadingComponent = FallbackComponent) =>
+    loadingComponent = FallbackComponent) =>
     universal(asyncImport, {
         loading: loadingComponent,
         error: ErrorMessage

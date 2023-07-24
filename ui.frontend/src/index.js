@@ -11,9 +11,11 @@ import App from './App';
 import LocalDevModelClient from './LocalDevModelClient';
 import './components/import-components';
 import './index.css';
+import './CoreStyles/base.scss';
 
 const modelManagerOptions = {};
-if(process.env.REACT_APP_PROXY_ENABLED) {
+
+if (process.env.REACT_APP_PROXY_ENABLED) {
     modelManagerOptions.modelClient = new LocalDevModelClient(process.env.REACT_APP_API_HOST);
 }
 
@@ -36,9 +38,6 @@ const renderApp = () => {
     });
 };
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
-
     renderApp();
 });

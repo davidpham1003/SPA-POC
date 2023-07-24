@@ -17,34 +17,55 @@
 import sanitizeHtml from 'sanitize-html';
 import sanitizeWhiteList from '../sanitize-html.whitelist';
 
-import React, { Component } from 'react';
+import React from 'react';
 import extractModelId from '../../utils/extract-model-id';
-
-require('./Text.scss');
+import { LazyTextComponent } from '../import-components';
+import { EditConfig, MapTo, MappedComponentProperties } from '@adobe/aem-react-editable-components';
 
 /**
  * Text React component
  */
-class Text extends Component {
-	get richTextContent() {
+
+interface TextModel extends MappedComponentProperties {
+    text?: string;
+    richText?: boolean;
+    cqPath: string;
+    id?: string;
+}
+
+/**
+ * Default Edit configuration for the Text component that interact with the Core Text component and sub-types
+ *
+ * @type EditConfig
+ */
+const TextEditConfig: EditConfig<TextModel> = {
+    emptyLabel: 'Text',
+
+    isEmpty: function (props) {
+        return !props || !props.text || props.text.trim().length < 1;
+    }
+};
+
+function Text(props: any) {
+	const getRichTextContent = () => {
 		return (
 			<div
-				id={extractModelId(this.props.cqPath)}
+				id={extractModelId(props.cqPath)}
 				data-rte-editelement
 				dangerouslySetInnerHTML={{
-					__html: sanitizeHtml(this.props.text, sanitizeWhiteList)
+					__html: sanitizeHtml(props.text, sanitizeWhiteList)
 				}}
 			/>
 		);
 	}
 
-	get textContent() {
-		return <div>{this.props.text}</div>;
+	const getTextContent = () => {
+		return <div>{props.text}</div>;
 	}
 
-	render() {
-		return this.props.richText ? this.richTextContent : this.textContent;
-	}
+	return props.richText ? getRichTextContent() : getTextContent();
 }
 
 export default Text;
+
+MapTo('poc-spa/components/text')(LazyTextComponent, TextEditConfig);

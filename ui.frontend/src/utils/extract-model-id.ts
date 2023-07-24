@@ -20,6 +20,6 @@
  * @param path - Path to be converted into an id
  * @returns {string|undefined}
  */
-export default function extractModelId(path) {
+export default function extractModelId(path: string): string | undefined {
   return path && path.replace(/\/|:/g, '_');
 }
